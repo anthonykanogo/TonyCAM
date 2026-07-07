@@ -1,23 +1,20 @@
-from svgpathtools import svg2paths
+from tonycam.svg_reader import read_svg
+from tonycam.gcode_writer import generate_gcode
+from tonycam.postprocessors.hycut import save_gcode
 
-filename = "input/square.svg"
 
-paths, attributes = svg2paths(filename)
+SVG_FILE = "input/square.svg"
+OUTPUT_FILE = "output/square.cnc"
 
-print("=" * 45)
-print("TonyCAM Geometry Inspector")
-print("=" * 45)
 
-for path_number, path in enumerate(paths, start=1):
+paths = read_svg(SVG_FILE)
 
-    print(f"\nPATH {path_number}")
+gcode = generate_gcode(paths)
 
-    for segment_number, segment in enumerate(path, start=1):
+save_gcode(gcode, OUTPUT_FILE)
 
-        start = segment.start
-        end = segment.end
-
-        print(f"\nSegment {segment_number}")
-        print(f"Type : {type(segment).__name__}")
-        print(f"Start: ({start.real:.2f}, {start.imag:.2f})")
-        print(f"End  : ({end.real:.2f}, {end.imag:.2f})")
+print("TonyCAM")
+print("--------------------")
+print(f"Loaded : {SVG_FILE}")
+print(f"Paths  : {len(paths)}")
+print(f"Saved  : {OUTPUT_FILE}")
