@@ -20,3 +20,5 @@ class Contour:
         self.operation = "CUT"
 
         self.priority = 0
+
+        self.role = "UNKNOWN"
