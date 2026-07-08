@@ -1,4 +1,11 @@
+from tonycam.dimensions import calculate_dimensions
+from tonycam.shape import classify_shape
+from tonycam.models import Contour
+
+
 def analyze_contours(paths):
+
+    contours = []
 
     print("")
     print("=============================================")
@@ -7,22 +14,41 @@ def analyze_contours(paths):
 
     for index, path in enumerate(paths):
 
-        first_point = path[0].start
-        last_point = path[-1].end
+        # Create a contour object
+        contour = Contour(path)
 
-        closed = first_point == last_point
+        # Calculate geometry information
+        contour.shape = classify_shape(path)
 
+        contour.width, contour.height = calculate_dimensions(path)
+
+
+        contours.append(contour)
+
+
+        # Display report
         print("")
         print(f"Contour {index + 1}")
         print("----------------------------")
 
-        print(f"Closed : {closed}")
-        print(f"Segments: {len(path)}")
+        print(f"Closed : {contour.closed}")
+        print(f"Segments: {contour.segments}")
+        print(f"Shape: {contour.shape}")
+
+        print(f"Width : {contour.width:.2f} mm")
+        print(f"Height: {contour.height:.2f} mm")
+
+
+        start = path[0].start
+        end = path[-1].end
 
         print(
-            f"Start: ({first_point.real:.2f}, {first_point.imag:.2f})"
+            f"Start: ({start.real:.2f}, {start.imag:.2f})"
         )
 
         print(
-            f"End  : ({last_point.real:.2f}, {last_point.imag:.2f})"
+            f"End  : ({end.real:.2f}, {end.imag:.2f})"
         )
+
+
+    return contours

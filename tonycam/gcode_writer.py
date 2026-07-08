@@ -1,4 +1,4 @@
-def generate_gcode(paths):
+def generate_gcode(contours):
 
     gcode = []
 
@@ -9,22 +9,42 @@ def generate_gcode(paths):
     gcode.append("G21")
     gcode.append("G90")
 
-    for path in paths:
+
+    for contour in contours:
+
+        # Skip contours not selected
+        if not contour.selected:
+            continue
+
+
+        path = contour.path
 
         start = path[0].start
 
+
         gcode.append("")
-        gcode.append(f"G0 X{start.real:.3f} Y{start.imag:.3f}")
+
+        gcode.append(
+            f"G0 X{start.real:.3f} Y{start.imag:.3f}"
+        )
+
         gcode.append("M03")
+
 
         for segment in path:
 
             end = segment.end
-            gcode.append(f"G1 X{end.real:.3f} Y{end.imag:.3f}")
+
+            gcode.append(
+                f"G1 X{end.real:.3f} Y{end.imag:.3f}"
+            )
+
 
         gcode.append("M05")
 
+
     gcode.append("")
     gcode.append("M30")
+
 
     return gcode
