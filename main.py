@@ -41,12 +41,7 @@ for svg_file in svg_files:
     paths = read_svg(input_path)
     
     contours = analyze_contours(paths)
-    for contour in contours:
-        print("")
-        print("DEBUG OBJECT")
-        print(contour.shape)
-        print(contour.width)
-        print(contour.selected)
+    
     
     inspect_paths(paths)
 

@@ -16,3 +16,7 @@ class Contour:
         self.height = None
 
         self.selected = True
+
+        self.operation = "CUT"
+
+        self.priority = 0

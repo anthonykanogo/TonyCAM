@@ -21,6 +21,8 @@ def analyze_contours(paths):
         contour.shape = classify_shape(path)
 
         contour.width, contour.height = calculate_dimensions(path)
+        
+        contour.priority = len(path)
 
 
         contours.append(contour)
@@ -37,6 +39,8 @@ def analyze_contours(paths):
 
         print(f"Width : {contour.width:.2f} mm")
         print(f"Height: {contour.height:.2f} mm")
+        print(f"Priority: {contour.priority}")
+        print(f"Operation: {contour.operation}")
 
 
         start = path[0].start
