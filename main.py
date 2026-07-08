@@ -4,6 +4,8 @@ from tonycam.svg_reader import read_svg
 from tonycam.gcode_writer import generate_gcode
 from tonycam.postprocessors.hycut import save_gcode
 from tonycam.inspector import inspect_paths
+from tonycam.contour import analyze_contours
+
 
 
 INPUT_FOLDER = "input"
@@ -37,6 +39,8 @@ for svg_file in svg_files:
 
 
     paths = read_svg(input_path)
+    
+    analyze_contours(paths)
     
     inspect_paths(paths)
 
