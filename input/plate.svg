@@ -1,0 +1,13 @@
+<svg width="120mm" height="100mm" viewBox="0 0 120 100"
+xmlns="http://www.w3.org/2000/svg">
+
+<rect x="10" y="10" width="100" height="80"
+fill="none" stroke="black"/>
+
+<circle cx="40" cy="50" r="10"
+fill="none" stroke="black"/>
+
+<circle cx="80" cy="50" r="10"
+fill="none" stroke="black"/>
+
+</svg>
