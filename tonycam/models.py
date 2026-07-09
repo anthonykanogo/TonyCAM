@@ -4,6 +4,7 @@ class Contour:
 
         self.path = path
 
+        # Geometry information
         self.segments = len(path)
 
         self.closed = (
@@ -15,10 +16,20 @@ class Contour:
         self.width = None
         self.height = None
 
+
+        # User selection
         self.selected = True
 
+
+        # CAM information
         self.operation = "CUT"
 
         self.priority = 0
 
         self.role = "UNKNOWN"
+
+
+        # Topology information
+        self.parent = None
+
+        self.children = []

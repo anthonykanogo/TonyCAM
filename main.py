@@ -1,5 +1,6 @@
 import os
 
+from tonycam.topology import analyze_relationships
 from tonycam.svg_reader import read_svg
 from tonycam.gcode_writer import generate_gcode
 from tonycam.postprocessors.hycut import save_gcode
@@ -42,6 +43,7 @@ for svg_file in svg_files:
     
     contours = analyze_contours(paths)
     
+    analyze_relationships(contours)
     
     inspect_paths(paths)
 
