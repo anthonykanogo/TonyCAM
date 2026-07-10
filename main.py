@@ -43,7 +43,11 @@ for svg_file in svg_files:
     
     contours = analyze_contours(paths)
     
+    from tonycam.topology import sort_contours
+    
     analyze_relationships(contours)
+    
+    contours = sort_contours(contours)
     
     inspect_paths(paths)
 
@@ -51,6 +55,13 @@ for svg_file in svg_files:
 
     save_gcode(gcode, output_path)
 
+    print("CUTTING ORDER")
 
+    for contour in contours:
+        print(
+            contour.cut_order,
+            contour.shape,
+            contour.role
+    )
     print(f"Processed: {svg_file}")
     print(f"Saved: {output_path}")

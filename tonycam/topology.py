@@ -1,6 +1,3 @@
-from tonycam.geometry import contour_contains
-
-
 def analyze_relationships(contours):
 
     print("")
@@ -35,15 +32,45 @@ def analyze_relationships(contours):
                 break
 
 
-    # Assign roles based on topology
+    # Assign roles
 
     for contour in contours:
 
         if contour.parent is None:
+
             contour.role = "OUTER PROFILE"
 
         else:
+
             contour.role = "INTERNAL FEATURE"
+
+
+
+    # Assign machining order
+
+    cut_order = 1
+
+
+    # Internal features first
+
+    for contour in contours:
+
+        if contour.role == "INTERNAL FEATURE":
+
+            contour.cut_order = cut_order
+            cut_order += 1
+
+
+
+    # Outer profiles last
+
+    for contour in contours:
+
+        if contour.role == "OUTER PROFILE":
+
+            contour.cut_order = cut_order
+            cut_order += 1
+
 
 
     # Display results
@@ -68,24 +95,51 @@ def analyze_relationships(contours):
 
         print(f"Children: {len(contour.children)}")
 
+        print(f"Cut Order: {contour.cut_order}")
+
 
 
 def is_inside(inner, outer):
 
     """
-    Determines whether one contour is inside another.
+    Temporary containment test.
 
-    Uses geometry analysis.
-
-    Current version:
-    Bounding-box containment.
-
-    Future versions:
-    True line/arc containment.
+    Uses dimensions only.
+    Will later become true geometry analysis.
     """
 
-    return contour_contains(
-        outer,
-        inner
+    if inner.width is None or outer.width is None:
+
+        return False
+
+
+    if inner.height is None or outer.height is None:
+
+        return False
+
+
+    return (
+        inner.width < outer.width
+        and
+        inner.height < outer.height
+    )
+     
+     
+def sort_contours(contours):
+
+    return sorted(
+        contours,
+        key=lambda contour: contour.cut_order
     )
     
+def calculate_depth(contour):
+
+    depth = 0
+
+    parent = contour.parent
+
+    while parent is not None:
+        depth += 1
+        parent = parent.parent
+
+    return depth

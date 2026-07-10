@@ -27,9 +27,14 @@ class Contour:
         self.priority = 0
 
         self.role = "UNKNOWN"
+        
+        self.cut_order = 0
 
 
         # Topology information
         self.parent = None
 
         self.children = []
+        
+        self.depth = 0
+        self.cut_order = 0
