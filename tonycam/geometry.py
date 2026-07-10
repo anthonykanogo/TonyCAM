@@ -3,13 +3,20 @@ import math
 
 def get_test_points(contour):
     """
-    Returns important points from a contour
-    for containment testing.
+    Extract important geometry points
+    from a contour.
+
+    Includes:
+    - line endpoints
+    - arc endpoints
+    - arc midpoint approximation
     """
 
     points = []
 
     for segment in contour.path:
+
+        # Always include start point
 
         points.append(
             (
@@ -17,6 +24,35 @@ def get_test_points(contour):
                 segment.start.imag
             )
         )
+
+
+        # Include end point
+
+        points.append(
+            (
+                segment.end.real,
+                segment.end.imag
+            )
+        )
+
+
+        # Arc midpoint support
+
+        if hasattr(segment, "center"):
+
+            mid = (
+                segment.start +
+                segment.end
+            ) / 2
+
+
+            points.append(
+                (
+                    mid.real,
+                    mid.imag
+                )
+            )
+
 
     return points
 
