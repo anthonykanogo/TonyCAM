@@ -1,3 +1,6 @@
+from tonycam.geometry import contour_contains
+
+
 def analyze_relationships(contours):
 
     print("")
@@ -32,7 +35,7 @@ def analyze_relationships(contours):
                 break
 
 
-    # Assign roles
+    # Assign roles based on topology
 
     for contour in contours:
 
@@ -55,10 +58,13 @@ def analyze_relationships(contours):
         print(f"Role: {contour.role}")
 
         if contour.parent:
+
             print("Parent: Yes")
 
         else:
+
             print("Parent: None")
+
 
         print(f"Children: {len(contour.children)}")
 
@@ -67,22 +73,19 @@ def analyze_relationships(contours):
 def is_inside(inner, outer):
 
     """
-    Temporary containment test.
+    Determines whether one contour is inside another.
 
-    Uses dimensions only.
-    Will be replaced with true geometry analysis.
+    Uses geometry analysis.
+
+    Current version:
+    Bounding-box containment.
+
+    Future versions:
+    True line/arc containment.
     """
 
-    if inner.width is None or outer.width is None:
-        return False
-
-
-    if inner.height is None or outer.height is None:
-        return False
-
-
-    return (
-        inner.width < outer.width
-        and
-        inner.height < outer.height
+    return contour_contains(
+        outer,
+        inner
     )
+    
